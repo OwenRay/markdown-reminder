@@ -1,6 +1,6 @@
 # markdown-reminder
 
-This project fetches a specified GitHub repository, detects timestamps in the repository's content, and sends notifications at these timestamps. It uses environment variables for configuration, including the repository to clone, the update interval, the Pushbullet API token for sending notifications, and the regular expression for matching date and time strings. The project can be run locally or in a Docker container.
+This project fetches a specified GitHub repository, detects timestamps in the repository's content, and sends notifications at these timestamps. It uses environment variables for configuration, including the repository to clone, the update interval, the Pushbullet API token for sending notifications, and the regular expression for matching date and time strings. The project can be run locally or in a Docker container
 
 ## Installation
 
