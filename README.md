@@ -22,7 +22,7 @@ bun start
 Run in docker with the following command
 
 ```bash
-docker run -e REPO=user/repo -e GH_PAT=github_pat -e PUSHBULLET_TOKEN=some_token OwenRay/markdown-reminder
+docker run -e REPO=user/repo -e GH_PAT=github_pat -e PUSHBULLET_TOKEN=some_token owenray/markdown-reminder
 ```
 
 Replace the environment variables with the actual values.
