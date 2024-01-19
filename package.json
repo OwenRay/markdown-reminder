@@ -1,0 +1,21 @@
+{
+  "name": "markdown-reminder",
+  "module": "src/_index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "bun index.ts",
+    "dev": "bun --watch dev",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.0.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}
