@@ -177,4 +177,4 @@ dist
 
 # project specific
 .files
-.env
+_.env

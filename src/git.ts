@@ -1,5 +1,5 @@
 import {promises} from 'fs'
-import {GH_PAT, REPO, REPO_DIR} from "./config.ts";
+import { GIT_USERNAME, REPO, REPO_DIR} from "./config.ts";
 const {exists} = promises;
 
 export async function clone () {
@@ -8,15 +8,16 @@ export async function clone () {
     }
 
     const output = Bun.spawnSync(
-        ['git', 'clone', `https://${GH_PAT}@github.com/${REPO}`, REPO_DIR.name!],
+        ['git', 'clone', `https://${GIT_USERNAME}@github.com/${REPO}.git`, REPO_DIR.name!],
         {
-            env: { GIT_USER: 'OwenRay', GIT_PASS: GH_PAT }
+            stdout: 'inherit'
         }
     )
     if(output.exitCode !== 0) {
         console.log('git clone failed', output)
         throw new Error('git clone failed')
     }
+    console.log('git clone successful');
 }
 export function pull () {
     const output = Bun.spawnSync(
@@ -26,7 +27,7 @@ export function pull () {
         }
     );
     if(output.exitCode !== 0) {
-        console.log('git pull failed', output)
+        console.log('git pull failed', `${output.stderr}`)
         throw new Error('git pull failed')
     }
 }

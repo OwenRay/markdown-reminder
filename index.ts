@@ -8,5 +8,6 @@ setInterval(updateGitAndResetTimers, UPDATE_INTERVAL);
 async function updateGitAndResetTimers () {
     console.log('updating git repo')
     pull();
-    void reminderTimers()
+    await reminderTimers();
+    console.log('all ready')
 }
