@@ -4,6 +4,9 @@ FROM oven/bun:latest
 # Set the working directory
 WORKDIR /usr/src/app
 
+# Update package lists and install git
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
 # Define build-time variables
 ARG REPO
 ARG GH_PAT
