@@ -12,7 +12,8 @@ bun install
 
 ## Usage
 
-To run the project with Bun, use the following command:
+1. First set the environment variables. copy the `.env.example` file to `.env` and fill in the values.
+2. Then run the project with Bun, use the following command:
 
 ```bash
 bun start
