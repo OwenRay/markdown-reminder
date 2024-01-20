@@ -23,16 +23,17 @@ bun start
 Run in docker with the following command
 
 ```bash
+# With git personal access token
 docker run -e REPO=user/repo -e GH_PAT=github_pat -e PUSHBULLET_TOKEN=some_token owenray/markdown-reminder
+# Or mount an ssh directory and use those credentials
+docker run  -v .ssh -e REPO=user/repo -e PUSHBULLET_TOKEN=some_token owenray/markdown-reminder
 ```
 
-Replace the environment variables with the actual values.
-
 ## All possible options
-| Option            | Default Value                             | Description                           |
-|-------------------|-------------------------------------------|---------------------------------------|
-| `REPO`            | -                                         | The repository to clone               |
-| `GH_PAT`          | -                                         | GitHub Personal Access Token          |
-| `PUSHBULLET_TOKEN`| -                                         | Pushbullet API token                  |
-| `UPDATE_INTERVAL` | 3600000                                   | Interval to check for updates in ms   |
-| `DATE_REGEX`      | `\d{2,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}` | Regular expression for date match     |
+| Option            | Default Value                             | Description                                                                |
+|-------------------|-------------------------------------------|----------------------------------------------------------------------------|
+| `REPO`            | -                                         | The repository to clone                                                    |
+| `GH_PAT`          | -                                         | GitHub Personal Access Token, if undefined will use system ssh credentials |
+| `PUSHBULLET_TOKEN`| -                                         | Pushbullet API token                                                       |
+| `UPDATE_INTERVAL` | 3600000                                   | Interval to check for updates in ms                                        |
+| `DATE_REGEX`      | `\d{2,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}` | Regular expression for date match                                          |

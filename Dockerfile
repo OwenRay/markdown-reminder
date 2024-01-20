@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 RUN mkdir ~/.ssh
 RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN git config --global pull.ff only
-RUN git config --global credential.helper /usr/src/app/src/credentials-helper.ts
 
 # Define build-time variables
 ARG REPO
@@ -34,7 +33,6 @@ RUN bun install
 
 # Copy the rest of the application
 COPY . .
-RUN chmod +x src/credentials-helper.ts
 
 # Set the command to run your application
 CMD [ "bun", "start" ]

@@ -1,33 +1,52 @@
 import {promises} from 'fs'
-import { GIT_USERNAME, REPO, REPO_DIR} from "./config.ts";
+import {GH_PAT, GIT_USERNAME, REPO, REPO_DIR} from "./config.ts";
 const {exists} = promises;
 
 export async function clone () {
     if (await exists(`${REPO_DIR.name}/.git`)) {
         return
     }
-
-    const output = Bun.spawnSync(
-        ['git', 'clone', `https://${GIT_USERNAME}@github.com/${REPO}.git`, REPO_DIR.name!],
-        {
-            stdout: 'inherit'
-        }
-    )
-    if(output.exitCode !== 0) {
-        console.log('git clone failed', output)
-        throw new Error('git clone failed')
+    let url = 'git@github.com:';
+    if(GH_PAT) {
+        url = `https://${GIT_USERNAME}@github.com/`;
+    }
+    const success = executeGitCommand('clone', '--verbose', `${url}${REPO}.git`, '.')
+    if(!success) {
+        throw new Error('git clone failed');
     }
     console.log('git clone successful');
 }
 export function pull () {
+    executeGitCommand('pull');
+}
+
+function executeGitCommand (...args: string[]) {
+    let credentialsHelper:string[] = [];
+    if(GH_PAT) {
+        const credentials = [
+            'protocol=https',
+            'host=github.com',
+            `username=${GIT_USERNAME}`,
+            `password=${GH_PAT}`
+        ]
+        const helper = `!echo -e "${credentials.join('\\n')}";`;
+        credentialsHelper = ['-c', `credential.helper=${helper}`]
+    }
+
     const output = Bun.spawnSync(
-        ['git', 'pull'],
+        ['git', ...credentialsHelper, ...args],
         {
+            env: {
+                GIT_TRACE: '1',
+            },
+            stdout: 'inherit',
+            stderr: 'inherit',
             cwd: REPO_DIR.name!
         }
     );
     if(output.exitCode !== 0) {
-        console.log('git pull failed', `${output.stderr}`)
-        throw new Error('git pull failed')
+        console.warn('git command failed', `${output.stderr}`, `${output.stdout}`)
     }
+    console.log(output.exitCode);
+    return output.exitCode===0;
 }
